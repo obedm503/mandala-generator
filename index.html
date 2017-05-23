@@ -1,12 +1,70 @@
 <!DOCTYPE>
 <html>
   <head>
-    <script src="https://www.desmos.com/api/v0.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
-    <script src="index.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mandala Generator</title>
+    <link rel="stylesheet" href="http://bootswatch.com/cosmo/bootstrap.min.css">
+    <style>
+      .row {
+        margin-bottom: 20px;
+      }
+    </style>
   </head>
   <body>
-    <button onclick="mandala.graph()">Graph Random Mandala</button>
-    <button onclick="mandala.screenshot()">Take Screenshot</button>
-    <div id="calculator" style="width:100%;height:95%"></div>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="#">Mandala Generator</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col col-xs-6">
+          <div class="form-group">
+            <label class="control-label" for="range">
+              Range of random numbers
+            </label>
+            <input
+              class="form-control"
+              id="range"
+              type="text"
+              name="range"
+              placeholder="Range"
+              value="10"
+            >
+          </div>
+          <button class="btn btn-primary btn-block" onclick="mandala.graph()">
+            Graph Random Mandala
+          </button>
+        </div>
+        <div class="col col-xs-6">
+          <div class="form-group">
+            <label class="control-label" for="amount">
+              Amount of random numbers
+            </label>
+            <input
+              class="form-control"
+              id="amount"
+              type="text"
+              name="amount"
+              placeholder="Amount"
+              value="1"
+            >
+          </div>
+          <button class="btn btn-primary btn-block" onclick="mandala.screenshot()">
+            Take Screenshot
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-xs-12">
+          <div id="calculator"></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://www.desmos.com/api/v0.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+    <script src="index.js"></script>
   </body>
 </html>
