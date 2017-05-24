@@ -63,6 +63,8 @@ window.mandala = (()=>{
       let amount = parseInt(document.getElementById('amount').value);
 
       calculator.setBlank();
+      // range + 1 to alevitate Math.random's inability to produce 1
+      // Math.random has a range of [0,1)
       let numbers = randomNumbers(range + 1, amount);
       let expressions = [
         ...lines(numbers),
@@ -70,12 +72,31 @@ window.mandala = (()=>{
         ...derivative(numbers),
         ...circles(numbers),
         ...flowers(numbers)
-      ]
+      ];
       expressions.filter( ( ex, i, arr ) => arr.indexOf(ex) === i )
         .forEach( exp => calculator.setExpression({
           latex: exp,
           color: randomColor()
         }) );
+
+      // interesting relationship between circle radius and spike tips
+      // multiplying the radius by  809/500 or 1.618 gives the coordinates
+      // for the intersection point between the curves that form the spikes
+      // + .5 adds some padding so that the intersection is not at the edge
+      // of the graph
+      let max = (Math.max(...numbers) + .5 ) * 1.618;
+      let min = max * -1;
+      // graph's height and width
+      let { clientHeight, clientWidth } = document.getElementById('calculator');
+      let ratio =   clientWidth/clientHeight;
+      // multiplying the domain by the ratio prevents the circles from appearing
+      // as ovals, essentially makes the graph's "aspect ratio" 1:1
+      calculator.setMathBounds({
+        left: min * ratio,
+        right: max * ratio,
+        bottom: min,
+        top: max
+      });
     },
     screenshot(){
       window.screenshot = calculator.screenshot();

@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mandala Generator</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css">
-    <style>
-      .row {
-        margin-bottom: 20px;
-      }
-    </style>
   </head>
   <body>
     <nav class="navbar navbar-inverse">
@@ -19,48 +14,51 @@
         </div>
       </div>
     </nav>
+
     <div class="container">
       <div class="row">
-        <div class="col col-xs-6">
-          <div class="form-group">
-            <label class="control-label" for="range">
-              Range of random numbers
-            </label>
-            <input
-              class="form-control"
-              id="range"
-              type="text"
-              name="range"
-              placeholder="Range"
-              value="10"
-            >
+        <div class="col col-sm-3">
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label" for="range">
+                Range of random numbers
+              </label>
+              <input
+                class="form-control"
+                id="range"
+                type="text"
+                name="range"
+                placeholder="Range"
+                value="10"
+              >
+            </div>
           </div>
-          <button class="btn btn-primary btn-block" onclick="mandala.graph()">
-            Graph Random Mandala
-          </button>
-        </div>
-        <div class="col col-xs-6">
-          <div class="form-group">
-            <label class="control-label" for="amount">
-              Amount of random numbers
-            </label>
-            <input
-              class="form-control"
-              id="amount"
-              type="text"
-              name="amount"
-              placeholder="Amount"
-              value="1"
-            >
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label" for="amount">
+                Amount of random numbers
+              </label>
+              <input
+                class="form-control"
+                id="amount"
+                type="text"
+                name="amount"
+                placeholder="Amount"
+                value="2"
+              >
+            </div>
           </div>
-          <button class="btn btn-primary btn-block" onclick="mandala.screenshot()">
-            Take Screenshot
-          </button>
+          <div class="row">
+            <button class="btn btn-primary btn-block" onclick="mandala.graph()">
+              Graph Random Mandala
+            </button>
+            <button class="btn btn-primary btn-block" onclick="mandala.screenshot()">
+              Take Screenshot
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col col-xs-12">
-          <div id="calculator"></div>
+        <div class="col col-sm-9">
+          <div id="calculator" style="height:calc(100% - 93px)"></div>
         </div>
       </div>
     </div>
