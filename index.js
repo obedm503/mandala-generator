@@ -15,14 +15,9 @@ window.mandala = (()=>{
   }
   function curves(numbers){
     return numbers.reduce( ( arr, n ) => {
-      // arr.push(`y=-\\sqrt{x^2-${Math.pow(n, 2)}}`);
-      // arr.push(`y=\\sqrt{x^2-${Math.pow(n, 2)}}`);
-      // arr.push(`x=-\\sqrt{y^2-${Math.pow(n, 2)}}`);
-      // arr.push(`x=\\sqrt{y^2-${Math.pow(n, 2)}}`);
-
-      arr.push(`y=-\\left(\\frac{x^2}{${n}}+${n * -1}\\right)`);
+      let abs = Math.abs(n);
+      arr.push(`f(x)=-\\left(\\frac{x^2}{${n}}+${n * -1}\\right)`);
       arr.push(`y=\\frac{x^2}{${n}}+${n * -1}`);
-
       arr.push(`x=-\\left(\\frac{y^2}{${n}}+${n * -1}\\right)`);
       arr.push(`x=\\frac{y^2}{${n}}+${n * -1}`);
       return arr;
@@ -47,9 +42,15 @@ window.mandala = (()=>{
       return arr;
     }, []);
   }
+  function integrals(numbers){
+    return numbers.map( n => {
+      let abs = Math.abs(n);
+      return `y=\\int_{${ abs * -1 }}^{${ abs }}f(t)dx`;
+    });
+  }
 
   document.addEventListener("DOMContentLoaded", ()=>{
-     calculator = Desmos.GraphingCalculator(
+    window.mandala.calculator = calculator = Desmos.GraphingCalculator(
       document.getElementById('calculator'), {
       keypad: false,
       expressionsCollapsed: true,
@@ -72,7 +73,8 @@ window.mandala = (()=>{
         ...curves(numbers),
         ...derivative(numbers),
         ...circles(numbers),
-        ...flowers(numbers)
+        ...flowers(numbers),
+        ...integrals(numbers)
       ];
       expressions.filter( ( ex, i, arr ) => arr.indexOf(ex) === i )
         .forEach( exp => calculator.setExpression({
