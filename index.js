@@ -1,5 +1,10 @@
 window.mandala = (()=>{
   let calculator;
+  function graphBounds(n){
+    let abs = Math.abs(n);
+    return `\\left\\{ ${ -1 * abs * 1.618 } < x < ${ abs * 1.618 } \\right\\}`;
+  }
+
   function randomColor(){
     return '#' + Math.random().toString(16).slice(2, 8).toUpperCase();
   }
@@ -10,24 +15,30 @@ window.mandala = (()=>{
       .map( num => ( range * num ).toFixed(4) )
       .filter( num => num !== 0 && !isNaN(num) );
   }
-  function lines(numbers){
-    return numbers.map( num => `y=${num}(x+${num})` );
+  function lines(numbers, max){
+    return numbers.map( num => {
+      let bounds = graphBounds(max);
+      return `y=${num}(x+${num}${bounds.replace('x', 'y')}${bounds})`;
+    });
   }
-  function curves(numbers){
+  function curves(numbers, max){
     return numbers.reduce( ( arr, n ) => {
       let abs = Math.abs(n);
-      arr.push(`f(x)=-\\left(\\frac{x^2}{${n}}+${n * -1}\\right)`);
-      arr.push(`y=\\frac{x^2}{${n}}+${n * -1}`);
-      arr.push(`x=-\\left(\\frac{y^2}{${n}}+${n * -1}\\right)`);
-      arr.push(`x=\\frac{y^2}{${n}}+${n * -1}`);
+      let bounds = graphBounds(max);
+
+      arr.push(`f_{${ Math.floor(abs) }}(x)=-\\left(\\frac{x^2}{${n}}+${n * -1}\\right)${ bounds.replace('x', 'y') }${bounds}`);
+      arr.push(`y=\\frac{x^2}{${n}}+${n * -1}${ bounds.replace('x', 'y') }${bounds}`);
+      arr.push(`x=-\\left(\\frac{y^2}{${n}}+${n * -1}\\right)${ bounds.replace('x', 'y') }${bounds}`);
+      arr.push(`x=\\frac{y^2}{${n}}+${n * -1}${ bounds.replace('x', 'y') }${bounds}`);
       return arr;
     }, []);
   }
-  function derivative(numbers){
+  function derivative(numbers, max){
     return numbers.reduce( ( arr, n ) => {
+      let bounds = graphBounds(max);
       n = (n * n)/n;
-      arr.push(`y=x^{${n}}`);
-      arr.push(`y=${n}x^{${n-1}}`);
+      arr.push(`y=x^{${n}}${ bounds.replace('x', 'y') }${bounds}`);
+      arr.push(`y=${n}x^{${n-1}}${ bounds.replace('x', 'y') }${bounds}`);
       return arr;
     }, []);
   }
@@ -45,7 +56,7 @@ window.mandala = (()=>{
   function integrals(numbers){
     return numbers.map( n => {
       let abs = Math.abs(n);
-      return `y=\\int_{${ abs * -1 }}^{${ abs }}f(t)dx`;
+      return `y=\\int_{${ abs * -1 }}^{${ abs }}f_{${ Math.floor(abs) }}(t)dx`;
     });
   }
 
@@ -68,13 +79,15 @@ window.mandala = (()=>{
       // range + 1 to alevitate Math.random's inability to produce 1
       // Math.random has a range of [0,1)
       let numbers = randomNumbers(range + 1, amount);
+      let largest = Math.max(...numbers);
+      // numbers = [3];
       let expressions = [
-        ...lines(numbers),
-        ...curves(numbers),
-        ...derivative(numbers),
-        ...circles(numbers),
-        ...flowers(numbers),
-        ...integrals(numbers)
+        ...lines(numbers, largest),
+        ...curves(numbers, largest),
+        ...derivative(numbers, largest),
+        ...circles(numbers, largest),
+        ...flowers(numbers, largest),
+        ...integrals(numbers, largest)
       ];
       expressions.filter( ( ex, i, arr ) => arr.indexOf(ex) === i )
         .forEach( exp => calculator.setExpression({
@@ -88,7 +101,7 @@ window.mandala = (()=>{
       // + .5 adds some padding so that the intersection is not at the edge
       // of the graph
       // phi = 1.618
-      let max = ( Math.max(...numbers) + .5 ) * 1.618;
+      let max = ( largest + .5 ) * 1.618;
       let min = max * -1;
       // graph's height and width
       let { clientHeight, clientWidth } = document.getElementById('calculator');
