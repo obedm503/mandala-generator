@@ -26,7 +26,7 @@ window.mandala = (()=>{
       let abs = Math.abs(n);
       let bounds = graphBounds(max);
 
-      arr.push(`f_{${ Math.floor(abs) }}(x)=-\\left(\\frac{x^2}{${n}}+${n * -1}\\right)${ bounds.replace('x', 'y') }${bounds}`);
+      arr.push(`f_{${ Math.floor(abs) }}=-\\left(\\frac{x^2}{${n}}+${n * -1}\\right)${ bounds.replace('x', `f_${ Math.floor(abs) }`) }${bounds}`);
       arr.push(`y=\\frac{x^2}{${n}}+${n * -1}${ bounds.replace('x', 'y') }${bounds}`);
       arr.push(`x=-\\left(\\frac{y^2}{${n}}+${n * -1}\\right)${ bounds.replace('x', 'y') }${bounds}`);
       arr.push(`x=\\frac{y^2}{${n}}+${n * -1}${ bounds.replace('x', 'y') }${bounds}`);
@@ -55,7 +55,7 @@ window.mandala = (()=>{
   function integrals(numbers){
     return numbers.map( n => {
       let abs = Math.abs(n);
-      return `y=\\int_{${ abs * -1 }}^{${ abs }}f_{${ Math.floor(abs) }}(t)dx`;
+      return `y=\\int_{${ abs * -1 }}^{${ abs }}f_{${ Math.floor(abs) }}dx`;
     });
   }
 
