@@ -36,7 +36,6 @@ window.mandala = (()=>{
   function derivative(numbers, max){
     return numbers.reduce( ( arr, n ) => {
       let bounds = graphBounds(max);
-      n = (n * n)/n;
       arr.push(`y=x^{${n}}${ bounds.replace('x', 'y') }${bounds}`);
       arr.push(`y=${n}x^{${n-1}}${ bounds.replace('x', 'y') }${bounds}`);
       return arr;
