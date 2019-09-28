@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "parcel build src/index.html",
-    "dev": "parcel serve src/index.html"
+    "build": "parcel build src/index.html --public-url mandala-generator",
+    "dev": "parcel src/index.html"
   },
   "husky": {
     "pre-push": "npm run build && gh-pages -d dist"
