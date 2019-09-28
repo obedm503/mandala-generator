@@ -5,11 +5,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "deploy": "npm run build && gh-pages -d dist",
     "build": "parcel build src/index.html --public-url mandala-generator",
     "dev": "parcel src/index.html"
   },
   "husky": {
-    "pre-push": "npm run build && gh-pages -d dist"
+    "pre-push": "npm run deploy"
   },
   "devDependencies": {
     "gh-pages": "^2.1.1",
