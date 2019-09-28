@@ -1,12 +1,13 @@
 {
   "name": "mandala-generator",
+  "homepage": "https://obedm503.github.io/mandala-generator/",
   "repository": "https://github.com/obedm503/mandala-generator.git",
   "author": "obedm503",
   "license": "MIT",
   "private": true,
   "scripts": {
     "deploy": "rm -rf dist && npm run build && gh-pages -d dist",
-    "build": "parcel build src/index.html --public-url mandala-generator",
+    "build": "parcel build src/index.html --public-url /mandala-generator",
     "dev": "parcel src/index.html"
   },
   "husky": {
