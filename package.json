@@ -8,7 +8,12 @@
     "build": "parcel build src/index.html",
     "dev": "parcel serve src/index.html"
   },
+  "husky": {
+    "pre-push": "npm run build && gh-pages --dir dist"
+  },
   "devDependencies": {
+    "gh-pages": "^2.1.1",
+    "husky": "^3.0.7",
     "parcel-bundler": "^1.12.3"
   }
 }
